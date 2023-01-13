@@ -9,7 +9,8 @@ console.log(hour);
 
 
 
-// Appends the table rows
+// Renders the table rows
+function renderTableRows(){
 for (let i = 9; i < 18; i++) {
     var timeRowEl = $('<tr>')
     timeRowEl[0].setAttribute("data-state", i);
@@ -21,15 +22,15 @@ for (let i = 9; i < 18; i++) {
   .addClass('p-2 col-sm-1 col-md-1 col-lg-1')
   .text(i + ':00');
   
-  var taskInputEl = $('<input>').addClass('save-project-btn col-sm-10 col-md-10 col-lg-10');
+  var taskInputEl = $('<input>').addClass('task-input col-sm-10 col-md-10 col-lg-10');
+
   var tasklTdEl = $('<td>')
   .addClass('p-2 col-sm-10 col-md-10 col-lg-10').append(taskInputEl);
 
 
   var saveBtnEl = $('<td>')
-  .addClass('p-2 save-project-btn col-sm-1 col-md-1 col-lg-1').text('💾');
-  
-
+  .addClass('p-2 save-project-btn col-sm-1 col-md-1 col-lg-1')
+  .text('💾');
 
   timeRowEl.append(
     timeTdEl,
@@ -39,6 +40,7 @@ for (let i = 9; i < 18; i++) {
 
   timeTableEl.append(timeRowEl);
 
+// The row will be grey if it's before the current hour, red if it's the current hour, and green if it's after
   if (timeNumber == 9 && hour!=9) {
     tasklTdEl.addClass('bg-secondary');
   }else if (timeNumber < hour) {
@@ -48,3 +50,22 @@ for (let i = 9; i < 18; i++) {
 }else if (timeNumber > hour){
     tasklTdEl.addClass('bg-success');
 }};
+
+
+};
+
+
+
+function  saveTask() {
+// Store Task column Input in Local Storage
+var taskInputEl = $('.task-input');
+// var task = taskInputEl[0].val();
+var task = taskInputEl.val();
+localStorage.setItem("task", task);
+console.log(task)
+
+// return task
+};
+
+timeTableEl.on('click', '.save-project-btn', saveTask);
+renderTableRows();
