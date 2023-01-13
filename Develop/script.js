@@ -62,7 +62,8 @@ var taskInputEl = $('.task-input');
 // var task = taskInputEl[0].val();
 var task = taskInputEl.val();
 localStorage.setItem("task", task);
-console.log(task)
+var savedTask = localStorage.getItem(task)
+taskInputEl.attr("placeholder", `${savedTask}`)
 
 // return task
 };
