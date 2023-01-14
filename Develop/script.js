@@ -13,9 +13,9 @@ console.log(hour);
 function renderTableRows(){
 for (let i = 9; i < 18; i++) {
     var timeRowEl = $('<tr>')
-    timeRowEl[0].setAttribute("data-state", i);
+    timeRowEl[0].setAttribute("time", i);
 
-    var timeNumber = timeRowEl[0].getAttribute("data-state");
+    var timeNumber = timeRowEl[0].getAttribute("time");
 //   .addClass(`${i}`);
   
   var timeTdEl = $('<td>')
@@ -23,6 +23,8 @@ for (let i = 9; i < 18; i++) {
   .text(i + ':00');
   
   var taskInputEl = $('<input>').addClass('task-input col-sm-10 col-md-10 col-lg-10');
+  var savedTask = localStorage.getItem('saved-task')
+  taskInputEl.attr("placeholder", savedTask);
 
   var tasklTdEl = $('<td>')
   .addClass('p-2 col-sm-10 col-md-10 col-lg-10').append(taskInputEl);
@@ -41,7 +43,7 @@ for (let i = 9; i < 18; i++) {
   timeTableEl.append(timeRowEl);
 
 // The row will be grey if it's before the current hour, red if it's the current hour, and green if it's after
-  if (timeNumber == 9 && hour!=9) {
+if (timeNumber == 9 && hour!=9) {
     tasklTdEl.addClass('bg-secondary');
   }else if (timeNumber < hour) {
     tasklTdEl.addClass('bg-secondary');
@@ -55,18 +57,15 @@ for (let i = 9; i < 18; i++) {
 };
 
 
-
 function  saveTask() {
-// Store Task column Input in Local Storage
-var taskInputEl = $('.task-input');
-// var task = taskInputEl[0].val();
-var task = taskInputEl.val();
-localStorage.setItem("task", task);
-var savedTask = localStorage.getItem(task)
-taskInputEl.attr("placeholder", `${savedTask}`)
-
-// return task
+  var saveBtn = $('.save-project-btn');
+  var inputEl = saveBtn.prev().find('.task-input');
+  var inputVal = inputEl.val();
+  localStorage.setItem("saved-task", inputVal);
+var savedTask = localStorage.getItem('saved-task')
+inputEl.attr("placeholder", savedTask);
 };
+
 
 timeTableEl.on('click', '.save-project-btn', saveTask);
 renderTableRows();
