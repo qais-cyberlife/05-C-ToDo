@@ -23,8 +23,16 @@ for (let i = 9; i < 18; i++) {
   .text(i + ':00');
   
   var taskInputEl = $('<input>').addClass('task-input col-sm-10 col-md-10 col-lg-10');
-  var savedTask = localStorage.getItem('saved-task')
-  taskInputEl.attr("placeholder", savedTask);
+  let input = $("<input>").attr("id", "input" + i);
+  
+  $("input[id^='input']").on("change", function() {
+    let inputValue = $(this).val();
+    localStorage.setItem(input, inputValue);
+    $(this).attr("placeholder", localStorage.getItem(input));
+});
+
+  // var savedTask = localStorage.getItem('saved-task')
+  // taskInputEl.attr("placeholder", savedTask);
 
   var tasklTdEl = $('<td>')
   .addClass('p-2 col-sm-10 col-md-10 col-lg-10').append(taskInputEl);
@@ -61,8 +69,8 @@ function  saveTask() {
   var saveBtn = $('.save-project-btn');
   var inputEl = saveBtn.prev().find('.task-input');
   var inputVal = inputEl.val();
-  localStorage.setItem("saved-task", inputVal);
-var savedTask = localStorage.getItem('saved-task')
+  localStorage.setItem(input, inputVal);
+var savedTask = localStorage.getItem(input)
 inputEl.attr("placeholder", savedTask);
 };
 
