@@ -1,5 +1,5 @@
 // refrence to Improtant DOM ELements
-var timeTableEl = $('#time-table')
+var timeTableEl = $('#time-table');
 // Displays the Day in Header
 var today = moment();
 $('#currentDay').text(today.format('dddd MMM Do, YYYY'));
@@ -23,19 +23,22 @@ for (let i = 9; i < 18; i++) {
   .text(i + ':00');
   
   var taskInputEl = $('<input>').addClass('task-input col-sm-10 col-md-10 col-lg-10');
-  let input = $("<input>").attr("id", "input" + i);
+  taskInputEl.attr("id", i);
+  var savedTask = localStorage.getItem(i)
+  taskInputEl.attr("placeholder", savedTask);
   
-  $("input[id^='input']").on("change", function() {
-    let inputValue = $(this).val();
-    localStorage.setItem(input, inputValue);
-    $(this).attr("placeholder", localStorage.getItem(input));
-});
+//   $("input[id^='input']").on("change", function() {
+//     let inputValue = $(this).val();
+//     localStorage.setItem(input, inputValue);
+//     $(this).attr("placeholder", localStorage.getItem(input));
+// });
 
   // var savedTask = localStorage.getItem('saved-task')
   // taskInputEl.attr("placeholder", savedTask);
 
   var tasklTdEl = $('<td>')
-  .addClass('p-2 col-sm-10 col-md-10 col-lg-10').append(taskInputEl);
+  .addClass('p-2 col-sm-10 col-md-10 col-lg-10')
+  .append(taskInputEl);
 
 
   var saveBtnEl = $('<td>')
@@ -65,13 +68,18 @@ if (timeNumber == 9 && hour!=9) {
 };
 
 
-function  saveTask() {
-  var saveBtn = $('.save-project-btn');
+function  saveTask(event) {
+  var saveBtn = $(event.target);
+  console.log(saveBtn)
   var inputEl = saveBtn.prev().find('.task-input');
+  var inputId = inputEl.attr("id");
+  // var timeId = inputEl[0].getAttribute('time');
+  console.log(inputId)
   var inputVal = inputEl.val();
-  localStorage.setItem(input, inputVal);
-var savedTask = localStorage.getItem(input)
-inputEl.attr("placeholder", savedTask);
+  console.log(inputVal)
+  localStorage.setItem(inputId , inputVal);
+// var savedTask = localStorage.getItem(inputId)
+// inputEl.attr("placeholder", savedTask);
 };
 
 
